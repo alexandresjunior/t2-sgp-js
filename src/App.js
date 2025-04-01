@@ -1,9 +1,9 @@
 import './App.css';
-import Login from './paginas/Login';
+import Rotas from './rotas';
 
 function App() {
   return (
-    <Login />
+    <Rotas />
   );
 }
 
