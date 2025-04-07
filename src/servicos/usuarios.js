@@ -13,3 +13,15 @@ export async function salvarUsuario(dadosUsuario, setExibirModal) {
         });
 }
 
+export async function listarUsuarios(setUsuarios) {
+    await api.get("/usuarios")
+        .then((resposta) => {
+            if (resposta.status === 200) {
+                setUsuarios(resposta.data.content);
+            }
+        })
+        .catch((erro) => {
+            alert("Erro ao listar usuarios.");
+            console.error("Erro ao listar usuarios: ", erro);
+        });
+}
