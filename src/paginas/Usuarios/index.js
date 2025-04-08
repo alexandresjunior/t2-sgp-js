@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import Cabecalho from '../../componentes/Cabecalho';
 import Rodape from '../../componentes/Rodape';
 import { listarUsuarios } from '../../servicos/usuarios';
+import { useNavigate } from 'react-router-dom';
 
 function Usuarios() {
+    const navigate = useNavigate();
     const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
@@ -15,7 +17,14 @@ function Usuarios() {
             <Cabecalho />
 
             <section className="container my-3" id="usuarios">
-                <h1>Usuarios Cadastrados</h1>
+                <div className='d-flex justify-content-between'>
+                    <h1>Usuarios Cadastrados</h1>
+                    <div>
+                        <button className='btn btn-primary' onClick={() => navigate("/novo-usuario")}>
+                            Novo Usuario
+                        </button>
+                    </div>
+                </div>
 
                 <table className="table table-hover">
                     <thead>
@@ -32,7 +41,7 @@ function Usuarios() {
                     <tbody>
                         {
                             usuarios.map((usuario) => (
-                                <tr>
+                                <tr key={usuario.id}>
                                     <th scope="row">{usuario.id}</th>
                                     <td>{usuario.nome}</td>
                                     <td>{usuario.cpf}</td>
@@ -44,7 +53,7 @@ function Usuarios() {
                                             <button 
                                                 type="button" 
                                                 className="btn btn-success"
-                                                onClick={() => {}}
+                                                onClick={() => navigate(`/usuario/${usuario.id}`)}
                                             > 
                                                 Editar
                                             </button>

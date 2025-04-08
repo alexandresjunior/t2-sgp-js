@@ -13,6 +13,7 @@ function Rotas() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/usuarios" element={<Usuarios />} />
                 <Route path="/novo-usuario" element={<UsuarioForm />} />
+                <Route path="/usuario/:id" element={<UsuarioForm />} />
                 <Route path="*" element={<Pagina404 />} />
             </Routes>
         </BrowserRouter>

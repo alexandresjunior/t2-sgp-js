@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cabecalho from "../../../componentes/Cabecalho";
 import Rodape from "../../../componentes/Rodape";
 import Modal from "../../../componentes/Modal";
-import { salvarUsuario } from "../../../servicos/usuarios";
-import { useNavigate } from "react-router-dom";
+import { atualizarUsuario, obterDadosUsuario, salvarUsuario } from "../../../servicos/usuarios";
+import { useNavigate, useParams } from "react-router-dom";
 import { formatarData } from "../../../utils/data";
 
 function UsuarioForm() {
     const navigate = useNavigate();
+    const { id } = useParams();
 
     const [nome, setNome] = useState("");
     const [cpf, setCpf] = useState("");
@@ -16,6 +17,20 @@ function UsuarioForm() {
     const [dataNascimento, setDataNascimento] = useState("");
     const [status, setStatus] = useState("");
     const [exibirModal, setExibirModal] = useState(false);
+
+    useEffect(() => {
+        if (id) {
+            obterDadosUsuario(
+                id,
+                setNome,
+                setCpf,
+                setEmail,
+                setDataNascimento,
+                setSenha,
+                setStatus
+            );
+        }
+    }, []);
 
     const enviarFormulario = async (e) => {
         e.preventDefault();
@@ -29,7 +44,11 @@ function UsuarioForm() {
             status
         }
 
-        await salvarUsuario(payload, setExibirModal);
+        if (id) {
+            await atualizarUsuario(id, payload, setExibirModal);
+        } else {
+            await salvarUsuario(payload, setExibirModal);
+        }
     }
 
     const confirmarCadastro = () => {
@@ -126,14 +145,19 @@ function UsuarioForm() {
                     </div>
                     <div className="col-12">
                         <button type="submit" className="btn btn-primary">Salvar</button>
-                        <button className="btn btn-outline-primary ms-2">Cancelar</button>
+                        <button 
+                            className="btn btn-outline-primary ms-2"
+                            onClick={() => navigate("/usuarios")}
+                        >
+                            Cancelar
+                        </button>
                     </div>
                 </form>
 
                 {exibirModal && (
                     <Modal
                         titulo={"Confirmacao de Cadastro"}
-                        texto={"Usuario cadastrado com sucesso"}
+                        texto={`Usuario ${id ? "atualizado" : "cadastrado"} com sucesso.`}
                         txtBtn1="OK"
                         onClickBtn1={confirmarCadastro}
                     />
