@@ -64,3 +64,16 @@ export async function atualizarUsuario(id, dadosUsuario, setExibirModal) {
             console.error("Erro ao atualizar usuario: ", erro);
         });
 }
+
+export async function deletarUsuario(id, setExibirModal) {
+    await api.delete(`/usuarios/${id}`)
+        .then((resposta) => {
+            if (resposta.status === 204) {
+                setExibirModal(false);
+            }
+        })
+        .catch((erro) => {
+            alert("Erro ao deletar usuario.");
+            console.error("Erro ao deletar usuario: ", erro);
+        });
+}
