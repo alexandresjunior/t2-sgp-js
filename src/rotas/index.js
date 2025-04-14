@@ -4,6 +4,8 @@ import Pagina404 from "../paginas/Pagina404";
 import Dashboard from "../paginas/Dashboard";
 import Usuarios from "../paginas/Usuarios";
 import UsuarioForm from "../paginas/Usuarios/UsuarioForm";
+import Projetos from "../paginas/Projetos";
+import ProjetoForm from "../paginas/Projetos/ProjetoForm";
 
 function Rotas() {
     return (
@@ -14,6 +16,9 @@ function Rotas() {
                 <Route path="/usuarios" element={<Usuarios />} />
                 <Route path="/novo-usuario" element={<UsuarioForm />} />
                 <Route path="/usuario/:id" element={<UsuarioForm />} />
+                <Route path="/projetos" element={<Projetos />} />
+                <Route path="/novo-projeto" element={<ProjetoForm />} />
+                <Route path="/projeto/:id" element={<ProjetoForm />} />
                 <Route path="*" element={<Pagina404 />} />
             </Routes>
         </BrowserRouter>
