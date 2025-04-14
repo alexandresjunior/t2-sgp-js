@@ -1,17 +1,58 @@
-import logo from '../../assets/sgp_logo_horizontal.png';
+import { useContext } from "react";
+import logo from "../../assets/sgp_logo_horizontal.png";
+import { GlobalContext } from "../../contextos/GlobalContext";
+import { useNavigate } from "react-router-dom";
 
 function Cabecalho() {
-    return (
-        <nav className="navbar bg-body-tertiary">
-            <div className="container">
-                <a className="navbar-brand" href="#">
-                    <img src={logo} alt="Treina Recife" width="250px" />
-                </a>
+    const { logout } = useContext(GlobalContext);
 
-                <form className="d-flex" role="search">
-                    <input className="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar" />
-                    <button className="btn btn-primary" type="submit">Buscar</button>
-                </form>
+    const navigate = useNavigate();
+
+    const fazerLogout = () => {
+        logout();
+
+        // Redirecionar para a tela de login
+        navigate("/");
+    }
+
+    return (
+        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <div className="container">
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#menu-lateral"
+                    aria-controls="menu-lateral"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+
+                <div className="collapse navbar-collapse" id="menu-lateral">
+                    <a className="navbar-brand" href=".">
+                        <img src={logo} alt="Sistema de Gestao de Projetos" width="200px" />
+                    </a>
+
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li className="nav-item">
+                            <a className="nav-link active" href="/dashboard">Dashboard</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/usuarios">Usuarios</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/projetos">Projetos</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/tarefas">Tarefas</a>
+                        </li>
+                    </ul>
+                    <button className="btn btn-primary" onClick={fazerLogout}>
+                        Sair
+                    </button>
+                </div>
             </div>
         </nav>
     );
